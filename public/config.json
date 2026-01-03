@@ -11,22 +11,6 @@
         }
       ]
     },
-    {
-      "name": "高等数学",
-      "folder": "math",
-      "files": [
-        {
-          "title": "第一章笔记(示例)",
-          "filename": "chapter1.md",
-          "type": "md"
-        },
-        {
-          "title": "习题集 (示例)",
-          "filename": "exercises.pdf",
-          "type": "pdf"
-        }
-      ]
-    },
 	{
       "name": "软件工程",
       "folder": "rjgc",
