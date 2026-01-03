@@ -10,13 +10,19 @@ function App() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileContent, setFileContent] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [expandedSubjects, setExpandedSubjects] = useState({});
 
   // 加载配置
   useEffect(() => {
-    fetch('/config.json')
-      .then(res => res.json())
+    fetch(`${import.meta.env.BASE_URL}config.json`)
+      .then(res => {
+        if (!res.ok) {
+           throw new Error(`无法加载配置文件 (Status: ${res.status})`);
+        }
+        return res.json();
+      })
       .then(data => {
         setConfig(data);
         if (data.subjects.length > 0) {
@@ -29,6 +35,7 @@ function App() {
       })
       .catch(err => {
         console.error('Failed to load config:', err);
+        setError(err.message);
         setLoading(false);
       });
   }, []);
