@@ -1,0 +1,52 @@
+{
+  "subjects": [
+    {
+      "name": "使用说明",
+      "folder": "guide",
+      "files": [
+        {
+          "title": "如何添加文件",
+          "filename": "how-to-add.md",
+          "type": "md"
+        }
+      ]
+    },
+    {
+      "name": "高等数学",
+      "folder": "math",
+      "files": [
+        {
+          "title": "第一章笔记(示例)",
+          "filename": "chapter1.md",
+          "type": "md"
+        },
+        {
+          "title": "习题集 (示例)",
+          "filename": "exercises.pdf",
+          "type": "pdf"
+        }
+      ]
+    },
+	{
+      "name": "软件工程",
+      "folder": "rjgc",
+      "files": [
+        {
+          "title": "串讲1",
+          "filename": "cj1.pdf",
+          "type": "pdf"
+        },
+		{
+          "title": "串讲2",
+          "filename": "cj2.pdf",
+          "type": "pdf"
+        },
+        {
+          "title": "题 ",
+          "filename": "ti.pdf",
+          "type": "pdf"
+        }
+      ]
+    }
+  ]
+}
