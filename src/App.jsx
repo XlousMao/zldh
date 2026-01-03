@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { FileText, Folder, Menu, ChevronRight, ChevronDown, BookOpen, AlertCircle, Home } from 'lucide-react';
+import { FileText, Folder, Menu, ChevronRight, ChevronDown, BookOpen, AlertCircle, Home, ChevronLeft, ZoomIn, ZoomOut } from 'lucide-react';
 import clsx from 'clsx';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
+
+// 设置 PDF worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 function App() {
   const [config, setConfig] = useState({ subjects: [] });
@@ -13,10 +19,16 @@ function App() {
   const [error, setError] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [expandedSubjects, setExpandedSubjects] = useState({});
+  
+  // PDF 状态
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [scale, setScale] = useState(1.0);
 
   // 加载配置
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}config.json`)
+    // 添加时间戳防止缓存
+    fetch(`${import.meta.env.BASE_URL}config.json?t=${Date.now()}`)
       .then(res => {
         if (!res.ok) {
            throw new Error(`无法加载配置文件 (Status: ${res.status})`);
