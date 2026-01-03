@@ -4,8 +4,8 @@ import remarkGfm from 'remark-gfm';
 import { FileText, Folder, Menu, ChevronRight, ChevronDown, BookOpen, AlertCircle, Home, ChevronLeft, ZoomIn, ZoomOut } from 'lucide-react';
 import clsx from 'clsx';
 import { Document, Page, pdfjs } from 'react-pdf';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
 
 // 设置 PDF worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -55,16 +55,26 @@ function App() {
   // 加载 Markdown 内容
   useEffect(() => {
     if (selectedFile && selectedSubject && selectedFile.type === 'md') {
-      const filePath = `/materials/${selectedSubject.folder}/${selectedFile.filename}`;
-      fetch(filePath)
+      const filePath = `${import.meta.env.BASE_URL}materials/${selectedSubject.folder}/${selectedFile.filename}`;
+      // 添加时间戳防止缓存
+      fetch(`${filePath}?t=${Date.now()}`)
         .then(res => {
           if (!res.ok) throw new Error('File not found');
           return res.text();
         })
         .then(text => setFileContent(text))
-        .catch(err => setFileContent(`# Error\n\nUnable to load file: ${filePath}`));
+        .catch(err => setFileContent(`# Error\n\nUnable to load file: ${filePath}\n\n${err.message}`));
+    }
+    // 重置 PDF 页码
+    if (selectedFile && selectedFile.type === 'pdf') {
+      setPageNumber(1);
+      setNumPages(null);
     }
   }, [selectedFile, selectedSubject]);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
 
   const handleFileSelect = (subject, file) => {
     setSelectedSubject(subject);
