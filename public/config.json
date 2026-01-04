@@ -31,6 +31,27 @@
           "type": "pdf"
         }
       ]
+    },
+	{
+      "name": "软件工程经济学",
+      "folder": "rjgcjjx",
+      "files": [
+        {
+          "title": "大纲",
+          "filename": "dg.pdf",
+          "type": "pdf"
+        },
+		{
+          "title": "知识点",
+          "filename": "zsd.md",
+          "type": "md"
+        },
+        {
+          "title": "题 ",
+          "filename": "timu.pdf",
+          "type": "pdf"
+        }
+      ]
     }
   ]
 }
